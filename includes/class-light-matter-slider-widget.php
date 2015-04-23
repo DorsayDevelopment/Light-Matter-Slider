@@ -19,20 +19,32 @@ class Light_Matter_Slider_Widget extends WP_Widget {
             array('description' => 'Light Matter Slider')
         );
 
-        add_action('admin_enqueue_scripts', array($this, 'image_selection_scripts'));
-        add_action('admin_enqueue_styles', array($this, 'image_selection_styles'));
+        add_action('admin_enqueue_scripts', array($this, 'plugin_admin_scripts'));
+        add_action('wp_enqueue_scripts', array($this, 'plugin_regular_scripts'));
+        add_action('wp_enqueue_styles', array($this, 'plugin_styles'));
     }
 
-    public function image_selection_scripts() {
+    // Scripts for admin page
+    public function plugin_admin_scripts() {
         wp_enqueue_media();
         wp_enqueue_script('media-upload');
         wp_enqueue_script('thickbox');
         wp_enqueue_script('light_matter_slider_widget', plugin_dir_url(__DIR__) . 'assets/js/light-matter-slider-widget.js', array('jquery'));
     }
 
-    public function image_selection_styles()
+    // Scripts for widget
+    public function plugin_regular_scripts() {
+        wp_deregister_script('jquery'); //Get rid of existing wordpress jquery 1.1.1
+        wp_register_script('jquery', plugin_dir_url(__DIR__) . 'assets/jquery/jquery-2.1.3.min.js');
+        wp_register_script('materialize', plugin_dir_url(__DIR__) . 'assets/materialize/js/materialize.min.js', array('jquery'), false, true);
+        wp_enqueue_script('jquery');
+        wp_enqueue_script('materialize');
+    }
+
+    public function plugin_styles()
     {
         wp_enqueue_style('thickbox');
+        wp_enqueue_style('light_matter_slider_widget', plugin_dir_url(__DIR__) . 'assets/css/light-matter-slider-widget.css');
     }
 
     /**
@@ -43,24 +55,14 @@ class Light_Matter_Slider_Widget extends WP_Widget {
      */
     public function widget( $args, $instance ) {
         echo $args['before_widget'];
-        if ( ! empty( $instance['title'] ) ) {
-            echo $args['before_title'] . apply_filters('widget_title', $instance['title']) . $args['after_title'];
-        }
+
         ?>
         <div class="slider fullscreen">
             <ul class="slides">
                 <li>
-                    <img src="<?php bloginfo('template_url'); ?>/img/atmosphere.jpg">
+                    <img src="<?php echo plugin_dir_url(__DIR__); ?>assets/img/atmosphere.jpg">
                 </li>
-                <li>
-                    <img src="<?php bloginfo('template_url'); ?>/img/moon.jpg">
-                </li>
-                <li>
-                    <img src="<?php bloginfo('template_url'); ?>/img/mountains2.jpg">
-                </li>
-                <li>
-                    <img src="<?php bloginfo('template_url'); ?>/img/jupiter.jpg">
-                </li>
+
             </ul>
         </div>
     <?php
@@ -81,7 +83,7 @@ class Light_Matter_Slider_Widget extends WP_Widget {
             <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
         </p>
         <p>
-            <input type="text" class="img" name="<?php echo $this->get_field_name('image_uri'); ?>" id="<?php echo $this->get_field_id('image_uri'); ?>" value="<?php echo $instance['image_uri']; ?>" />
+            <input type="text" class="hidden img" name="<?php echo $this->get_field_name('image_uri'); ?>" id="<?php echo $this->get_field_id('image_uri'); ?>" value="<?php echo $instance['image_uri']; ?>" />
             <a class="button button-hero choose-image-button">Choose an Image</a>
 
         </p>
