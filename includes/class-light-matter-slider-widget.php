@@ -60,6 +60,9 @@ class Light_Matter_Slider_Widget extends WP_Widget {
         <div class="slider fullscreen">
             <ul class="slides">
                 <li>
+                    <img src="<?php echo $instance['image_uri']; ?>">
+                </li>
+                <li>
                     <img src="<?php echo plugin_dir_url(__DIR__); ?>assets/img/moon.jpg">
                 </li>
                 <li>
@@ -81,6 +84,7 @@ class Light_Matter_Slider_Widget extends WP_Widget {
      */
     public function form( $instance ) {
         $title = ! empty( $instance['title'] ) ? $instance['title'] : __( 'New title', 'text_domain' );
+        $image_uri = ! empty( $instance['image_uri'] ) ? $instance['image_uri'] : __( '', 'text_domain' );
 
         ?>
         <p>
@@ -88,7 +92,7 @@ class Light_Matter_Slider_Widget extends WP_Widget {
             <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
         </p>
         <p>
-            <input type="text" class="hidden img" name="<?php echo $this->get_field_name('image_uri'); ?>" id="<?php echo $this->get_field_id('image_uri'); ?>" value="<?php echo $instance['image_uri']; ?>" />
+            <input type="text" class=" img" name="<?php echo $this->get_field_name('image_uri'); ?>" id="<?php echo $this->get_field_id('image_uri'); ?>" value="<?php echo esc_attr($image_uri); ?>" />
             <a class="button button-hero choose-image-button">Choose an Image</a>
 
         </p>
@@ -104,6 +108,7 @@ class Light_Matter_Slider_Widget extends WP_Widget {
     public function update( $new_instance, $old_instance ) {
         $instance = array();
         $instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+        $instance['image_uri'] = ( ! empty( $new_instance['image_uri'] ) ) ? strip_tags( $new_instance['image_uri'] ) : '';
 
         return $instance;
     }
