@@ -60,9 +60,14 @@ class Light_Matter_Slider_Widget extends WP_Widget {
         <div class="slider fullscreen">
             <ul class="slides">
                 <li>
-                    <img src="<?php echo plugin_dir_url(__DIR__); ?>assets/img/atmosphere.jpg">
+                    <img src="<?php echo plugin_dir_url(__DIR__); ?>assets/img/moon.jpg">
                 </li>
-
+                <li>
+                    <img src="<?php echo plugin_dir_url(__DIR__); ?>assets/img/astronaut.jpg">
+                </li>
+                <li>
+                    <img src="<?php echo plugin_dir_url(__DIR__); ?>assets/img/nebula.jpg">
+                </li>
             </ul>
         </div>
     <?php
