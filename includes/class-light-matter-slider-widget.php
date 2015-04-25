@@ -59,18 +59,11 @@ class Light_Matter_Slider_Widget extends WP_Widget {
         ?>
         <div class="slider fullscreen">
             <ul class="slides">
-                <li>
-                    <img src="<?php echo $instance['image_uri']; ?>">
-                </li>
-                <li>
-                    <img src="<?php echo plugin_dir_url(__DIR__); ?>assets/img/moon.jpg">
-                </li>
-                <li>
-                    <img src="<?php echo plugin_dir_url(__DIR__); ?>assets/img/astronaut.jpg">
-                </li>
-                <li>
-                    <img src="<?php echo plugin_dir_url(__DIR__); ?>assets/img/nebula.jpg">
-                </li>
+                <?php for($i = 0; $i < count($instance['image_uri']); $i++) { ?>
+                    <li>
+                        <img src="<?php echo $instance['image_uri'][$i]; ?>">
+                    </li>
+                <?php } ?>
             </ul>
         </div>
     <?php
@@ -81,21 +74,35 @@ class Light_Matter_Slider_Widget extends WP_Widget {
      * Outputs the options form on admin
      *
      * @param array $instance The widget options
+     * @return string|void
      */
     public function form( $instance ) {
-        $title = ! empty( $instance['title'] ) ? $instance['title'] : __( 'New title', 'text_domain' );
-        $image_uri = ! empty( $instance['image_uri'] ) ? $instance['image_uri'] : __( '', 'text_domain' );
-
+        $title = ! empty( $instance['title'] ) ? $instance['title'] : '';
+        $image_uri = isset($instance['image_uri']) ? $instance['image_uri'] : [];
+        $image_num = count($image_uri);
+        $image_uri[$image_num + 1] = '';
+        $image_html = [];
+        $image_counter = 0;
         ?>
         <p>
             <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
             <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
         </p>
-        <p>
-            <input type="text" class=" img" name="<?php echo $this->get_field_name('image_uri'); ?>" id="<?php echo $this->get_field_id('image_uri'); ?>" value="<?php echo esc_attr($image_uri); ?>" />
-            <a class="button button-hero choose-image-button">Choose an Image</a>
 
-        </p>
+        <?php
+        foreach($image_uri as $name => $value) {
+            $image_html[] = sprintf(
+                '<p><input type="text" class="widefat" name="%1$s[%2$s]" value="%3$s"/><a class="button button-hero choose-image-button">Choose an Image</a>',
+                $this->get_field_name('image_uri'),
+                $image_counter,
+                esc_attr($value)
+            );
+            $image_counter += 1;
+        }
+
+        print 'Images<br />' . join('<br />', $image_html);
+        ?>
+
 
     <?php }
 
@@ -104,11 +111,20 @@ class Light_Matter_Slider_Widget extends WP_Widget {
      *
      * @param array $new_instance The new options
      * @param array $old_instance The previous options
+     * @return array
      */
     public function update( $new_instance, $old_instance ) {
-        $instance = array();
+        $instance = $old_instance;
         $instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
-        $instance['image_uri'] = ( ! empty( $new_instance['image_uri'] ) ) ? strip_tags( $new_instance['image_uri'] ) : '';
+        $instance['image_uri'] = [];
+
+        if(isset($new_instance['image_uri'])) {
+            foreach($new_instance['image_uri'] as $value) {
+                if('' !== trim($value)) {
+                    $instance['image_uri'][] = $value;
+                }
+            }
+        }
 
         return $instance;
     }
