@@ -19,10 +19,10 @@ class Light_Matter_Slider_Widget extends WP_Widget {
             array('description' => 'Light Matter Slider')
         );
 
-        add_action('admin_enqueue_scripts', array($this, 'plugin_admin_scripts'));
-        add_action('wp_enqueue_scripts', array($this, 'plugin_regular_scripts'));
-        add_action('admin_enqueue_scripts', array($this, 'plugin_styles'));
-        add_action('wp_enqueue_styles', array($this, 'plugin_styles'));
+        add_action('admin_enqueue_scripts', array($this, 'plugin_admin_scripts'), 1);
+        add_action('wp_enqueue_scripts', array($this, 'plugin_regular_scripts'), 2);
+        add_action('admin_enqueue_scripts', array($this, 'plugin_styles'), 3);
+        add_action('wp_enqueue_scripts', array($this, 'plugin_styles'), 4);
     }
 
     // Scripts for admin page
@@ -116,7 +116,7 @@ class Light_Matter_Slider_Widget extends WP_Widget {
             $image_counter += 1;
         }
 
-        print 'Images:' . join('<br />', $image_html);
+        print 'Images:<br/>You may use images from the gallery or from an external URL. Please respect copyright and intelectual property' . join('<br />', $image_html);
         ?>
 
 

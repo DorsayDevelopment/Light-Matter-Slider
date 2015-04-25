@@ -26,4 +26,7 @@
 .slider-admin-section:last-child {
   margin-bottom: 10px; }
 
+.indicator-item.active {
+  background-color: #0059bc !important; }
+
 /*# sourceMappingURL=light-matter-slider-widget.css.map */
