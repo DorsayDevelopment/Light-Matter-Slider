@@ -11,7 +11,7 @@ jQuery(document).ready(function($) {
             multiple: false  // Set this to true to allow multiple files to be selected
         }).on('select', function() {
             var image = custom_uploader.state().get('selection').first().toJSON();
-            $(button).prev().val(image.url);
+            $(button).parent().next().children().first().val(image.url);
             custom_uploader.close();
         }).open();
     });
@@ -21,6 +21,6 @@ jQuery(document).ready(function($) {
 
         e.preventDefault();
 
-        $(this).prev().prev().val('');
+        $(this).parent().prev().children().first().val('');
     })
 });

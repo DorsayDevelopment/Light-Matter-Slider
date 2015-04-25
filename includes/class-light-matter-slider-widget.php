@@ -30,6 +30,7 @@ class Light_Matter_Slider_Widget extends WP_Widget {
         wp_enqueue_media();
         wp_enqueue_script('media-upload');
         wp_enqueue_script('thickbox');
+        wp_enqueue_style('thickbox');
         wp_enqueue_script('light_matter_slider_widget', plugin_dir_url(__DIR__) . 'assets/js/light-matter-slider-widget.js', array('jquery'));
     }
 
@@ -40,11 +41,12 @@ class Light_Matter_Slider_Widget extends WP_Widget {
         wp_register_script('materialize', plugin_dir_url(__DIR__) . 'assets/materialize/js/materialize.min.js', array('jquery'), false, true);
         wp_enqueue_script('jquery');
         wp_enqueue_script('materialize');
+        wp_enqueue_style('materialize', plugin_dir_url(__DIR__) . 'assets/materialize/css/materialize.min.css');
+
     }
 
     public function plugin_styles()
     {
-        wp_enqueue_style('thickbox');
         wp_enqueue_style('light_matter_slider_widget', plugin_dir_url(__DIR__) . 'assets/css/light-matter-slider-widget.css');
     }
 
@@ -92,10 +94,18 @@ class Light_Matter_Slider_Widget extends WP_Widget {
 
         <?php
         foreach($image_uri as $name => $value) {
-            $image_html[] = sprintf(
-                '<p><input type="text" class="widefat" name="%1$s[%2$s]" value="%3$s"/>
-                <a class="button choose-image-button">Choose an Image</a>
-                <a class="button remove-image-button widget-control-save">Remove</a>',
+            $image_html[] = sprintf('
+                <div class="slider-admin-section">
+                    <div class="slider-admin-image">
+                        <a class="button button-hero choose-image-button">Choose an Image</a>
+                    </div>
+                    <div class="slider-admin-image-uri">
+                        <input type="text" class="widefat" name="%1$s[%2$s]" value="%3$s" placeholder="Image uri"/>
+                    </div>
+                    <div class="slider-admin-remove">
+                        <a class="remove-image-button widget-control-save">Remove</a>
+                    </div>
+                </div>',
                 $this->get_field_name('image_uri'),
                 $image_counter,
                 esc_attr($value)
