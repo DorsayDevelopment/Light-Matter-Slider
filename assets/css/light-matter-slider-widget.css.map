@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,oBAAqB;EACnB,KAAK,EAAE,gCAAgC",
+"sources": ["light-matter-slider-widget.scss"],
+"names": [],
+"file": "light-matter-slider-widget.css"
+}

@@ -12,6 +12,15 @@ jQuery(document).ready(function($) {
         }).on('select', function() {
             var image = custom_uploader.state().get('selection').first().toJSON();
             $(button).prev().val(image.url);
+            custom_uploader.close();
         }).open();
     });
+
+    $(".remove-image-button").click(function(e) {
+        var button = this;
+
+        e.preventDefault();
+
+        $(this).prev().prev().val('');
+    })
 });

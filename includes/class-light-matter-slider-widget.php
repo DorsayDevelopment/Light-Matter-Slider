@@ -21,6 +21,7 @@ class Light_Matter_Slider_Widget extends WP_Widget {
 
         add_action('admin_enqueue_scripts', array($this, 'plugin_admin_scripts'));
         add_action('wp_enqueue_scripts', array($this, 'plugin_regular_scripts'));
+        add_action('admin_enqueue_scripts', array($this, 'plugin_styles'));
         add_action('wp_enqueue_styles', array($this, 'plugin_styles'));
     }
 
@@ -92,7 +93,9 @@ class Light_Matter_Slider_Widget extends WP_Widget {
         <?php
         foreach($image_uri as $name => $value) {
             $image_html[] = sprintf(
-                '<p><input type="text" class="widefat" name="%1$s[%2$s]" value="%3$s"/><a class="button button-hero choose-image-button">Choose an Image</a>',
+                '<p><input type="text" class="widefat" name="%1$s[%2$s]" value="%3$s"/>
+                <a class="button choose-image-button">Choose an Image</a>
+                <a class="button remove-image-button widget-control-save">Remove</a>',
                 $this->get_field_name('image_uri'),
                 $image_counter,
                 esc_attr($value)
@@ -100,7 +103,7 @@ class Light_Matter_Slider_Widget extends WP_Widget {
             $image_counter += 1;
         }
 
-        print 'Images<br />' . join('<br />', $image_html);
+        print 'Images:' . join('<br />', $image_html);
         ?>
 
 
