@@ -8,6 +8,8 @@
 
   .slider-admin-image {
     text-align: center;
+    max-height: 250px;
+    overflow-y: hidden;
 
     img {
       width: 100%;

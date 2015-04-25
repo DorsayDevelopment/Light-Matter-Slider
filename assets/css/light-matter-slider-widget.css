@@ -5,7 +5,9 @@
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   border-radius: 2px; }
   .slider-admin-section .slider-admin-image {
-    text-align: center; }
+    text-align: center;
+    max-height: 250px;
+    overflow-y: hidden; }
     .slider-admin-section .slider-admin-image img {
       width: 100%; }
   .slider-admin-section .choose-image-button {
