@@ -6,6 +6,8 @@
   border-radius: 2px; }
   .slider-admin-section .slider-admin-image {
     text-align: center; }
+    .slider-admin-section .slider-admin-image img {
+      width: 100%; }
   .slider-admin-section .choose-image-button {
     margin: 20px 0; }
   .slider-admin-section .slider-admin-image-uri {

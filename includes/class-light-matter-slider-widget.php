@@ -97,7 +97,8 @@ class Light_Matter_Slider_Widget extends WP_Widget {
             $image_html[] = sprintf('
                 <div class="slider-admin-section">
                     <div class="slider-admin-image">
-                        <a class="button button-hero choose-image-button">Choose an Image</a>
+                        <img class="%4$s" src="%3$s" alt=""/>
+                        <a class="%5$s button button-hero choose-image-button">Choose an Image</a>
                     </div>
                     <div class="slider-admin-image-uri">
                         <input type="text" class="widefat" name="%1$s[%2$s]" value="%3$s" placeholder="Image uri"/>
@@ -108,7 +109,9 @@ class Light_Matter_Slider_Widget extends WP_Widget {
                 </div>',
                 $this->get_field_name('image_uri'),
                 $image_counter,
-                esc_attr($value)
+                esc_attr($value),
+                ($image_counter < $image_num) ? '' : 'hidden',
+                !($image_counter < $image_num) ? '' : 'hidden'
             );
             $image_counter += 1;
         }

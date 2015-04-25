@@ -11,7 +11,9 @@ jQuery(document).ready(function($) {
             multiple: false  // Set this to true to allow multiple files to be selected
         }).on('select', function() {
             var image = custom_uploader.state().get('selection').first().toJSON();
+            $(button).addClass('hidden');
             $(button).parent().next().children().first().val(image.url);
+            $(button).prev().removeClass('hidden').attr('src', image.url);
             custom_uploader.close();
         }).open();
     });
